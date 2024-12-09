@@ -1,19 +1,18 @@
 "use client";
 
+import { Button } from "@/ui/shadcn/button";
 import { DialogDescription, DialogTitle } from "@/ui/shadcn/dialog";
-import { Drawer, DrawerContent } from "@/ui/shadcn/drawer";
+import { Drawer, DrawerClose, DrawerContent } from "@/ui/shadcn/drawer";
 import { Root as VisualyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { type PanInfo, motion } from "framer-motion";
+import { XIcon } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { GallerySlider } from "./components/gallery-slider";
 import { ProductThumbnail } from "./components/product-thumbnail";
 
-// const { Root } = VisualyHidden;
-
 type ProductGalleryProps = {
 	images: string[];
-	alts: string[];
 };
 
 const GalleryContent = ({
@@ -93,7 +92,7 @@ const GalleryContent = ({
 	);
 };
 
-export const ProductGallery = ({ images, alts }: ProductGalleryProps) => {
+export const ProductGallery = ({ images }: ProductGalleryProps) => {
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -165,7 +164,13 @@ export const ProductGallery = ({ images, alts }: ProductGalleryProps) => {
 						<DialogDescription />
 					</div>
 				</VisualyHiddenRoot>
+
 				<DrawerContent className="h-[90vh]">
+					<DrawerClose className="hidden sm:block">
+						<Button variant="outline" className="p-0 mt-6 w-8 h-8 rounded-full border border-black">
+							<XIcon className="size-8" />
+						</Button>
+					</DrawerClose>
 					<div className="flex flex-col h-full" role="dialog" aria-modal="true">
 						<div className="flex-1 px-6 pb-safe">
 							<GalleryContent

@@ -132,10 +132,7 @@ export default async function SingleProductPage(props: {
 									alt={`3D model of ${product.name}`}
 								/>
 							) : (
-								<ProductGallery
-									images={product.images}
-									alts={product.images.map((_, i) => `${product.name} - View ${i + 1}`)}
-								/>
+								<ProductGallery images={product.images} />
 							))}
 					</div>
 
