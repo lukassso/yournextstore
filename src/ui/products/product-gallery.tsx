@@ -1,11 +1,15 @@
 "use client";
 
+import { DialogDescription, DialogTitle } from "@/ui/shadcn/dialog";
 import { Drawer, DrawerContent } from "@/ui/shadcn/drawer";
+import { Root as VisualyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { type PanInfo, motion } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { GallerySlider } from "./components/gallery-slider";
 import { ProductThumbnail } from "./components/product-thumbnail";
+
+// const { Root } = VisualyHidden;
 
 type ProductGalleryProps = {
 	images: string[];
@@ -134,6 +138,12 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
 			</div>
 
 			<Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+				<VisualyHiddenRoot asChild>
+					<div>
+						<DialogTitle />
+						<DialogDescription />
+					</div>
+				</VisualyHiddenRoot>
 				<DrawerContent className="h-[90vh]">
 					<div className="flex flex-col h-full">
 						<div className="flex-1 px-6 pb-safe">
