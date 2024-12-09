@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 type TouchPoint = {
 	x: number;
@@ -20,6 +20,14 @@ export const useSwipe = (onSwipe: (direction: "next" | "prev") => void) => {
 			y: e.touches[0].clientY,
 		};
 	};
+
+	useEffect(() => {
+		return () => {
+			touchStart.current = { x: 0, y: 0 };
+			touchEnd.current = { x: 0, y: 0 };
+			touchStartTime.current = 0;
+		};
+	}, []);
 
 	const onTouchEnd = (e: React.TouchEvent) => {
 		if (!e.changedTouches[0]) return;

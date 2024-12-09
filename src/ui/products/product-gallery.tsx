@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/ui/shadcn/button";
 import { DialogDescription, DialogTitle } from "@/ui/shadcn/dialog";
 import { Drawer, DrawerClose, DrawerContent } from "@/ui/shadcn/drawer";
 import { Root as VisualyHiddenRoot } from "@radix-ui/react-visually-hidden";
@@ -167,9 +166,11 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
 
 				<DrawerContent className="h-[90vh]">
 					<DrawerClose className="hidden sm:block">
-						<Button variant="outline" className="p-0 mt-6 w-8 h-8 rounded-full border border-black">
-							<XIcon className="size-8" />
-						</Button>
+						<div className="flex items-center justify-center">
+							<div className="p-0 mt-6 w-8 h-8 flex items-center justify-center rounded-full border border-black hover:bg-gray-200 cursor-pointer">
+								<XIcon />
+							</div>
+						</div>
 					</DrawerClose>
 					<div className="flex flex-col h-full" role="dialog" aria-modal="true">
 						<div className="flex-1 px-6 pb-safe">
