@@ -2,7 +2,7 @@
 
 import { DialogDescription, DialogTitle } from "@/ui/shadcn/dialog";
 import { Drawer, DrawerClose, DrawerContent } from "@/ui/shadcn/drawer";
-import { Root as VisualyHiddenRoot } from "@radix-ui/react-visually-hidden";
+import { Root as VisuallyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { type PanInfo, motion } from "framer-motion";
 import { XIcon } from "lucide-react";
 import Image from "next/image";
@@ -157,12 +157,12 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
 			</div>
 
 			<Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} aria-label="Product gallery viewer">
-				<VisualyHiddenRoot asChild>
+				<VisuallyHiddenRoot asChild>
 					<div>
 						<DialogTitle />
 						<DialogDescription />
 					</div>
-				</VisualyHiddenRoot>
+				</VisuallyHiddenRoot>
 
 				<DrawerContent className="h-[90vh]">
 					<DrawerClose className="hidden sm:block">
