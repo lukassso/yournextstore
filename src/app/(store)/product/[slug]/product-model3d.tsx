@@ -4,9 +4,11 @@ import { Suspense } from "react";
 export const ProductModel3D = async ({
 	model3d,
 	imageSrc,
+	alt,
 }: {
 	model3d: string;
 	imageSrc?: string;
+	alt: string;
 }) => {
 	const { default: Spline } = await import("@splinetool/react-spline");
 
@@ -32,7 +34,7 @@ export const ProductModel3D = async ({
 							src={imageSrc}
 							loading="eager"
 							priority
-							alt=""
+							alt={alt || ""}
 						/>
 					)}
 				</Spline>
