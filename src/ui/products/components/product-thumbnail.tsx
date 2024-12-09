@@ -12,6 +12,10 @@ export const ProductThumbnail = ({ src, onSelect, index, isSelected }: ProductTh
 	return (
 		<div
 			onClick={() => onSelect(index)}
+			role="button"
+			aria-label={`Select product image ${index + 1}`}
+			tabIndex={0}
+			onKeyDown={(e) => e.key === "Enter" && onSelect(index)}
 			className={`cursor-pointer rounded-lg overflow-hidden ${isSelected ? "ring-2 ring-black" : ""}`}
 		>
 			<motion.div layoutId={`thumbnail-${index}`}>
@@ -21,7 +25,7 @@ export const ProductThumbnail = ({ src, onSelect, index, isSelected }: ProductTh
 					width={700 / 3}
 					height={700 / 3}
 					sizes="(max-width: 1024x) 33vw, (max-width: 1280px) 20vw, 225px"
-					alt=""
+					alt={`Product thumbnail ${index + 1}`}
 				/>
 			</motion.div>
 		</div>

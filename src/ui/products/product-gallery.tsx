@@ -13,6 +13,7 @@ import { ProductThumbnail } from "./components/product-thumbnail";
 
 type ProductGalleryProps = {
 	images: string[];
+	alts: string[];
 };
 
 const GalleryContent = ({
@@ -31,13 +32,16 @@ const GalleryContent = ({
 	const handleImageChange = useCallback(
 		(newIndex: number) => {
 			if (isTransitioning) return;
+			let timeoutId: NodeJS.Timeout;
 
 			setIsTransitioning(true);
 			setSelectedIndex(newIndex);
 
-			setTimeout(() => {
+			timeoutId = setTimeout(() => {
 				setIsTransitioning(false);
 			}, 700);
+
+			return () => clearTimeout(timeoutId);
 		},
 		[setSelectedIndex, isTransitioning],
 	);
@@ -56,7 +60,17 @@ const GalleryContent = ({
 
 	return (
 		<div className={`grid ${isDrawer ? "h-[75vh] grid-rows-[1fr_auto]" : "gap-4"}`}>
-			<GallerySlider images={images} selectedIndex={selectedIndex} onSwipe={handleSwipe} />
+			<div
+				role="region"
+				aria-label="Product gallery"
+				onKeyDown={(e) => {
+					if (e.key === "ArrowLeft") handleSwipe("prev");
+					if (e.key === "ArrowRight") handleSwipe("next");
+				}}
+				tabIndex={0}
+			>
+				<GallerySlider images={images} selectedIndex={selectedIndex} onSwipe={handleSwipe} />
+			</div>
 
 			<div className="flex gap-2 overflow-auto px-1 pb-safe">
 				{images.map((image, index) => (
@@ -79,7 +93,7 @@ const GalleryContent = ({
 	);
 };
 
-export const ProductGallery = ({ images }: ProductGalleryProps) => {
+export const ProductGallery = ({ images, alts }: ProductGalleryProps) => {
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -99,7 +113,13 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
 	return (
 		<>
 			<div>
-				<div onClick={() => setIsDrawerOpen(true)} className="cursor-zoom-in">
+				<div
+					onClick={() => setIsDrawerOpen(true)}
+					className="cursor-zoom-in"
+					role="button"
+					aria-label="Open gallery view"
+					tabIndex={0}
+				>
 					<div className="relative aspect-square w-full overflow-hidden rounded-lg">
 						<motion.div
 							style={{ height: "100%", width: "100%" }}
@@ -116,7 +136,8 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
 								height={700}
 								priority
 								sizes="(max-width: 1024x) 100vw, (max-width: 1280px) 50vw, 700px"
-								alt=""
+								alt={`Product image ${selectedIndex + 1} of ${images.length}`}
+								loading="eager"
 							/>
 						</motion.div>
 					</div>
@@ -137,7 +158,7 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
 				)}
 			</div>
 
-			<Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+			<Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} aria-label="Product gallery viewer">
 				<VisualyHiddenRoot asChild>
 					<div>
 						<DialogTitle />
@@ -145,7 +166,7 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
 					</div>
 				</VisualyHiddenRoot>
 				<DrawerContent className="h-[90vh]">
-					<div className="flex flex-col h-full">
+					<div className="flex flex-col h-full" role="dialog" aria-modal="true">
 						<div className="flex-1 px-6 pb-safe">
 							<GalleryContent
 								images={images}

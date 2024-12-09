@@ -126,9 +126,16 @@ export default async function SingleProductPage(props: {
 						<h2 className="sr-only">{t("imagesTitle")}</h2>
 						{product.images.length > 0 &&
 							(product.metadata.preview ? (
-								<ProductModel3D model3d={product.metadata.preview} imageSrc={product.images[0]} />
+								<ProductModel3D
+									model3d={product.metadata.preview}
+									imageSrc={product.images[0]}
+									alt={`3D model of ${product.name}`}
+								/>
 							) : (
-								<ProductGallery images={product.images} />
+								<ProductGallery
+									images={product.images}
+									alts={product.images.map((_, i) => `${product.name} - View ${i + 1}`)}
+								/>
 							))}
 					</div>
 
