@@ -29,7 +29,6 @@ const nextConfig: NextConfig = {
 		esmExternals: true,
 		scrollRestoration: true,
 		ppr: true,
-		after: true,
 		cpus: 1,
 		reactOwnerStack: true,
 		reactCompiler: true,
