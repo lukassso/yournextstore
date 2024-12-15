@@ -1,33 +1,36 @@
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 type ProductThumbnailProps = {
 	src: string;
-	onSelect: (index: number) => void;
 	index: number;
 	isSelected: boolean;
+	onSelect: (index: number) => void;
+	is3D?: boolean;
+	disabled?: boolean;
 };
 
-export const ProductThumbnail = ({ src, onSelect, index, isSelected }: ProductThumbnailProps) => {
+export const ProductThumbnail = ({
+	src,
+	index,
+	isSelected,
+	onSelect,
+	is3D,
+	disabled,
+}: ProductThumbnailProps) => {
 	return (
-		<div
+		<button
 			onClick={() => onSelect(index)}
-			role="button"
-			aria-label={`Select product image ${index + 1}`}
-			tabIndex={0}
-			onKeyDown={(e) => e.key === "Enter" && onSelect(index)}
-			className={`cursor-pointer rounded-lg overflow-hidden ${isSelected ? "ring-2 ring-black" : ""}`}
+			disabled={disabled}
+			className={`relative aspect-square h-20 overflow-hidden rounded-lg border-2 transition-all
+				${isSelected ? "border-black opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`}
 		>
-			<motion.div layoutId={`thumbnail-${index}`}>
-				<Image
-					className="w-full bg-neutral-100 object-cover object-center transition-opacity hover:opacity-75"
-					src={src}
-					width={700 / 3}
-					height={700 / 3}
-					sizes="(max-width: 1024x) 33vw, (max-width: 1280px) 20vw, 225px"
-					alt={`Product thumbnail ${index + 1}`}
-				/>
-			</motion.div>
-		</div>
+			{is3D ? (
+				<div className="h-full w-full flex items-center justify-center bg-neutral-100">
+					<span className="text-sm font-medium">3D</span>
+				</div>
+			) : (
+				<Image src={src} alt="" className="h-full w-full object-cover" width={80} height={80} />
+			)}
+		</button>
 	);
 };

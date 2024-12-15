@@ -1,4 +1,3 @@
-import { ProductModel3D } from "@/app/(store)/product/[slug]/product-model3d";
 import { publicUrl } from "@/env.mjs";
 import { getLocale, getTranslations } from "@/i18n/server";
 import { getRecommendedProducts } from "@/lib/search/trieve";
@@ -8,6 +7,7 @@ import { AddToCartButton } from "@/ui/add-to-cart-button";
 import { JsonLd, mappedProductToJsonLd } from "@/ui/json-ld";
 import { Markdown } from "@/ui/markdown";
 import { ProductGallery } from "@/ui/products/product-gallery";
+import { ProductGallery3D } from "@/ui/products/product-gallery-3d";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -126,10 +126,11 @@ export default async function SingleProductPage(props: {
 						<h2 className="sr-only">{t("imagesTitle")}</h2>
 						{product.images.length > 0 &&
 							(product.metadata.preview ? (
-								<ProductModel3D
+								<ProductGallery3D
 									model3d={product.metadata.preview}
 									imageSrc={product.images[0]}
 									alt={`3D model of ${product.name}`}
+									additionalImages={product.images.slice(1)}
 								/>
 							) : (
 								<ProductGallery images={product.images} />
