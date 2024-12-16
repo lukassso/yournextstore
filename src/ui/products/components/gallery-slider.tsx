@@ -25,10 +25,6 @@ export const GallerySlider = ({
 			role="region"
 			aria-label="Product image gallery"
 			tabIndex={0}
-			onKeyDown={(e) => {
-				if (e.key === "ArrowLeft") onSwipe("prev");
-				if (e.key === "ArrowRight") onSwipe("next");
-			}}
 			onTouchStart={onTouchStart}
 			onTouchEnd={onTouchEnd}
 		>

@@ -4,6 +4,7 @@ import { GallerySlider } from "@/ui/products/components/gallery-slider";
 import { GalleryThumbnails } from "@/ui/products/components/gallery-thumbnails";
 import dynamic from "next/dynamic";
 import { useCallback } from "react";
+import { useKeyboardNavigation } from "../hooks/use-keyboard-navigation";
 
 const Spline = dynamic(() => import("@splinetool/react-spline"), {
 	ssr: false,
@@ -31,18 +32,24 @@ export const BaseGallery = ({
 }: BaseGalleryProps) => {
 	const handleSwipe = useCallback(
 		(direction: "next" | "prev") => {
-			const maxIndex = srcModel3d ? images.length : images.length - 1;
-			const newIndex =
-				direction === "next" ? Math.min(selectedIndex + 1, maxIndex) : Math.max(selectedIndex - 1, 0);
-			onSelectIndex(newIndex);
+			if (direction === "next" && selectedIndex < images.length - 1) {
+				onSelectIndex(selectedIndex + 1);
+			}
+			if (direction === "prev" && selectedIndex > 0) {
+				onSelectIndex(selectedIndex - 1);
+			}
 		},
-		[selectedIndex, images.length, srcModel3d, onSelectIndex],
+		[selectedIndex, images.length, onSelectIndex],
 	);
 
-	const renderGalleryContent = () => (
-		<div className="relative aspect-square w-full overflow-hidden rounded-lg">
+	useKeyboardNavigation(handleSwipe);
+
+	const renderGalleryContent = (isDrawer?: boolean) => (
+		<div className={`relative ${isDrawer ? "h-full" : "aspect-square"} w-full overflow-hidden rounded-lg`}>
 			{srcModel3d && selectedIndex === 0 ? (
-				<Spline className="w-full object-cover" scene={srcModel3d} />
+				<div className={`${isDrawer ? "h-full" : "aspect-square"} w-full`}>
+					<Spline className="w-full h-full object-contain" scene={srcModel3d} />
+				</div>
 			) : (
 				<GallerySlider
 					images={images}
@@ -58,10 +65,22 @@ export const BaseGallery = ({
 		<>
 			<div className="grid gap-4">
 				<div
-					onClick={() => selectedIndex !== 0 && onDrawerOpenChange(true)}
-					role={selectedIndex !== 0 ? "button" : undefined}
-					aria-label={selectedIndex !== 0 ? "Open gallery view" : undefined}
-					tabIndex={selectedIndex !== 0 ? 0 : undefined}
+					onClick={() => {
+						const shouldOpenDrawer = srcModel3d ? selectedIndex !== 0 : true;
+						shouldOpenDrawer && onDrawerOpenChange(true);
+					}}
+					onKeyDown={(e) => {
+						if (e.key === "Enter" || e.key === " ") {
+							e.preventDefault();
+							const shouldOpenDrawer = srcModel3d ? selectedIndex !== 0 : true;
+							shouldOpenDrawer && onDrawerOpenChange(true);
+						}
+					}}
+					role={srcModel3d ? (selectedIndex !== 0 ? "button" : undefined) : "button"}
+					aria-label={
+						srcModel3d ? (selectedIndex !== 0 ? "Open gallery view" : undefined) : "Open gallery view"
+					}
+					tabIndex={srcModel3d ? (selectedIndex !== 0 ? 0 : undefined) : 0}
 				>
 					{renderGalleryContent()}
 				</div>
@@ -76,7 +95,7 @@ export const BaseGallery = ({
 
 			<GalleryDrawer isOpen={isDrawerOpen} onOpenChange={onDrawerOpenChange}>
 				<div className="grid h-[75vh] grid-rows-[1fr_auto]">
-					{renderGalleryContent()}
+					{renderGalleryContent(true)}
 					<div className="p-4">
 						<GalleryThumbnails
 							images={images}
