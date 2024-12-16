@@ -1,4 +1,6 @@
+import { GalleryLoader } from "@/ui/products/components/gallery-loader";
 import Image from "next/image";
+import { useState } from "react";
 
 type ProductThumbnailProps = {
 	src: string;
@@ -17,6 +19,8 @@ export const ProductThumbnail = ({
 	is3D,
 	disabled,
 }: ProductThumbnailProps) => {
+	const [isLoading, setIsLoading] = useState(true);
+
 	return (
 		<button
 			onClick={() => onSelect(index)}
@@ -29,7 +33,17 @@ export const ProductThumbnail = ({
 					<span className="text-sm font-medium">3D</span>
 				</div>
 			) : (
-				<Image src={src} alt="" className="h-full w-full object-cover" width={80} height={80} />
+				<>
+					{isLoading && <GalleryLoader />}
+					<Image
+						src={src}
+						alt=""
+						className="h-full w-full object-cover"
+						width={80}
+						height={80}
+						onLoadingComplete={() => setIsLoading(false)}
+					/>
+				</>
 			)}
 		</button>
 	);

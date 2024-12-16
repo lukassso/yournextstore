@@ -127,13 +127,13 @@ export default async function SingleProductPage(props: {
 						{product.images.length > 0 &&
 							(product.metadata.preview ? (
 								<ProductGallery3D
-									model3d={product.metadata.preview}
+									srcModel3d={product.metadata.preview}
 									imageSrc={product.images[0]}
 									alt={`3D model of ${product.name}`}
 									additionalImages={product.images.slice(1)}
 								/>
 							) : (
-								<ProductGallery images={product.images} />
+								<ProductGallery images={product.images} alt={`${product.name} image`} />
 							))}
 					</div>
 

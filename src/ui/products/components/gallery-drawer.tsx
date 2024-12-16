@@ -2,7 +2,6 @@ import { DialogDescription, DialogTitle } from "@/ui/shadcn/dialog";
 import { Drawer, DrawerClose, DrawerContent } from "@/ui/shadcn/drawer";
 import { Root as VisuallyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { XIcon } from "lucide-react";
-import Image from "next/image";
 
 type GalleryDrawerProps = {
 	isOpen: boolean;
@@ -28,7 +27,7 @@ export const GalleryDrawer = ({ isOpen, onOpenChange, children }: GalleryDrawerP
 						</div>
 					</div>
 				</DrawerClose>
-				<div className="flex flex-col h-full" role="dialog" aria-modal="true">
+				<div className="flex flex-col h-full mt-6 sm:mt-0" role="dialog" aria-modal="true">
 					<div className="flex-1 px-6 pb-safe">{children}</div>
 				</div>
 			</DrawerContent>

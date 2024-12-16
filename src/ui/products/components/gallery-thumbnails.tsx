@@ -5,7 +5,7 @@ type GalleryThumbnailsProps = {
 	selectedIndex: number;
 	onSelect: (index: number) => void;
 	is3DEnabled?: boolean;
-	model3d?: string;
+	srcModel3d?: string;
 };
 
 export const GalleryThumbnails = ({
@@ -13,14 +13,14 @@ export const GalleryThumbnails = ({
 	selectedIndex,
 	onSelect,
 	is3DEnabled,
-	model3d,
+	srcModel3d,
 }: GalleryThumbnailsProps) => {
 	return (
 		<div className="flex gap-2 overflow-auto px-1 pb-safe">
-			{is3DEnabled && model3d && (
+			{is3DEnabled && srcModel3d && (
 				<ProductThumbnail
 					key="3d-model"
-					src={model3d}
+					src={srcModel3d}
 					index={0}
 					isSelected={selectedIndex === 0}
 					onSelect={onSelect}

@@ -6,9 +6,15 @@ type GallerySliderProps = {
 	images: string[];
 	selectedIndex: number;
 	onSwipe: (direction: "next" | "prev") => void;
+	alt: string;
 };
 
-export const GallerySlider = ({ images, selectedIndex, onSwipe }: GallerySliderProps) => {
+export const GallerySlider = ({
+	images,
+	selectedIndex,
+	onSwipe,
+	alt = "Gallery image",
+}: GallerySliderProps) => {
 	const sliderRef = useRef<HTMLDivElement>(null);
 	const { onTouchStart, onTouchEnd } = useSwipe(onSwipe);
 
@@ -38,7 +44,7 @@ export const GallerySlider = ({ images, selectedIndex, onSwipe }: GallerySliderP
 						willChange: index === selectedIndex ? "transform" : "auto",
 					}}
 				>
-					<Image src={src} alt="" className="h-full w-full object-contain" width={1200} height={1200} />
+					<Image src={src} alt={alt} className="w-full object-contain" width={1200} height={1200} />
 				</div>
 			))}
 		</div>
