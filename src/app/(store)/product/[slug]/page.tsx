@@ -1,4 +1,4 @@
-import { ProductModel3D } from "@/app/(store)/product/[slug]/product-model3d";
+// import { ProductModel3D } from "@/app/(store)/product/[slug]/product-model3d";
 import { publicUrl } from "@/env.mjs";
 import { getLocale, getTranslations } from "@/i18n/server";
 import { getRecommendedProducts } from "@/lib/search/trieve";
@@ -7,6 +7,7 @@ import type { TrieveProductMetadata } from "@/scripts/upload-trieve";
 import { AddToCartButton } from "@/ui/add-to-cart-button";
 import { JsonLd, mappedProductToJsonLd } from "@/ui/json-ld";
 import { Markdown } from "@/ui/markdown";
+import { MainProductImage } from "@/ui/products/main-product-image";
 import { ProductGallery } from "@/ui/products/product-gallery";
 import {
 	Breadcrumb,
@@ -23,6 +24,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { Suspense } from "react";
+import ProductImageModal from "./product-image-modal";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ slug: string }>;
@@ -55,12 +57,13 @@ export const generateMetadata = async (props: {
 
 export default async function SingleProductPage(props: {
 	params: Promise<{ slug: string }>;
-	searchParams: Promise<{ variant?: string }>;
+	searchParams: Promise<{ variant?: string; image?: string }>;
 }) {
-	const searchParams = await props.searchParams;
 	const params = await props.params;
+	const searchParams = await props.searchParams;
+
 	const variants = await Commerce.productGet({ slug: params.slug });
-	const selectedVariant = searchParams.variant || variants[0]?.metadata.variant;
+	const selectedVariant = (variants.length > 1 && searchParams.variant) || variants[0]?.metadata.variant;
 	const product = variants.find((variant) => variant.metadata.variant === selectedVariant);
 
 	if (!product) {
@@ -71,6 +74,8 @@ export default async function SingleProductPage(props: {
 	const locale = await getLocale();
 
 	const category = product.metadata.category;
+	const images = product.images;
+	const src = searchParams.image && images[Number(searchParams.image)];
 
 	return (
 		<article className="pb-12">
@@ -124,16 +129,38 @@ export default async function SingleProductPage(props: {
 
 					<div className="lg:col-span-7 lg:row-span-3 lg:row-start-1">
 						<h2 className="sr-only">{t("imagesTitle")}</h2>
-						{product.images.length > 0 &&
-							(product.metadata.preview ? (
-								<ProductModel3D
-									model3d={product.metadata.preview}
-									imageSrc={product.images[0]}
-									alt={`3D model of ${product.name}`}
-								/>
-							) : (
-								<ProductGallery images={product.images} />
+
+						<div className="grid gap-4 lg:grid-cols-3 [&>*:first-child]:col-span-3">
+							{/* {product.metadata.preview && (
+								<ProductModel3D model3d={product.metadata.preview} imageSrc={product.images[0]} />
+							)} */}
+							{images.map((image, idx) => (
+								<YnsLink key={idx} href={`?image=${idx}`} scroll={false}>
+									{idx === 0 && !product.metadata.preview ? (
+										<MainProductImage
+											key={image}
+											className="w-full rounded-lg bg-neutral-100 object-cover object-center transition-opacity"
+											src={image}
+											loading="eager"
+											priority
+											alt=""
+										/>
+									) : (
+										<Image
+											key={image}
+											className="w-full rounded-lg bg-neutral-100 object-cover object-center transition-opacity"
+											src={image}
+											width={700 / 3}
+											height={700 / 3}
+											sizes="(max-width: 1024x) 33vw, (max-width: 1280px) 20vw, 225px"
+											loading="eager"
+											priority
+											alt=""
+										/>
+									)}
+								</YnsLink>
 							))}
+						</div>
 					</div>
 
 					<div className="grid gap-8 lg:col-span-5">
@@ -183,6 +210,12 @@ export default async function SingleProductPage(props: {
 			<Suspense>
 				<SimilarProducts id={product.id} />
 			</Suspense>
+
+			{src && (
+				<Suspense fallback={<div>Loading...</div>}>
+					<ProductImageModal src={src} images={images} alt={product.name} />
+				</Suspense>
+			)}
 
 			<JsonLd jsonLd={mappedProductToJsonLd(product)} />
 		</article>

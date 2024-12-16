@@ -2,10 +2,10 @@ import { getCartFromCookiesAction } from "@/actions/cart-actions";
 import { getLocale, getTranslations } from "@/i18n/server";
 import { formatMoney } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/ui/shadcn/tooltip";
-import { YnsLink } from "@/ui/yns-link";
 import { calculateCartTotalNetWithoutShipping } from "commerce-kit";
 import { ShoppingBagIcon } from "lucide-react";
 import { Suspense } from "react";
+import { CartLink } from "./cart-link";
 
 const CartFallback = () => (
 	<div className="h-6 w-6 opacity-30">
@@ -40,7 +40,7 @@ const CartSummaryNavInner = async () => {
 			<Tooltip delayDuration={100}>
 				<TooltipTrigger asChild>
 					<div>
-						<YnsLink href="/cart-overlay" scroll={false} className="relative block h-6 w-6" prefetch={true}>
+						<CartLink>
 							<ShoppingBagIcon />
 							<span className="absolute bottom-0 right-0 inline-flex h-5 w-5 translate-x-1/2 translate-y-1/2 items-center justify-center rounded-full border-2 bg-white text-center text-xs">
 								<span className="sr-only">{t("itemsInCart")}: </span>
@@ -54,7 +54,7 @@ const CartSummaryNavInner = async () => {
 									locale,
 								})}
 							</span>
-						</YnsLink>
+						</CartLink>
 					</div>
 				</TooltipTrigger>
 				<TooltipContent side="left" sideOffset={25}>
