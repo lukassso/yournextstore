@@ -1,4 +1,5 @@
 // import { ProductModel3D } from "@/app/(store)/product/[slug]/product-model3d";
+import { ProductImageModal } from "@/app/(store)/product/[slug]/product-image-modal";
 import { publicUrl } from "@/env.mjs";
 import { getLocale, getTranslations } from "@/i18n/server";
 import { getRecommendedProducts } from "@/lib/search/trieve";
@@ -24,7 +25,6 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next/types";
 import { Suspense } from "react";
-import ProductImageModal from "./product-image-modal";
 
 export const generateMetadata = async (props: {
 	params: Promise<{ slug: string }>;
@@ -75,7 +75,6 @@ export default async function SingleProductPage(props: {
 
 	const category = product.metadata.category;
 	const images = product.images;
-	const src = searchParams.image && images[Number(searchParams.image)];
 
 	return (
 		<article className="pb-12">
@@ -134,32 +133,40 @@ export default async function SingleProductPage(props: {
 							{/* {product.metadata.preview && (
 								<ProductModel3D model3d={product.metadata.preview} imageSrc={product.images[0]} />
 							)} */}
-							{images.map((image, idx) => (
-								<YnsLink key={idx} href={`?image=${idx}`} scroll={false}>
-									{idx === 0 && !product.metadata.preview ? (
-										<MainProductImage
-											key={image}
-											className="w-full rounded-lg bg-neutral-100 object-cover object-center transition-opacity"
-											src={image}
-											loading="eager"
-											priority
-											alt=""
-										/>
-									) : (
-										<Image
-											key={image}
-											className="w-full rounded-lg bg-neutral-100 object-cover object-center transition-opacity"
-											src={image}
-											width={700 / 3}
-											height={700 / 3}
-											sizes="(max-width: 1024x) 33vw, (max-width: 1280px) 20vw, 225px"
-											loading="eager"
-											priority
-											alt=""
-										/>
-									)}
-								</YnsLink>
-							))}
+							{images.map((image, idx) => {
+								const params = new URLSearchParams({
+									image: idx.toString(),
+								});
+								if (searchParams.variant) {
+									params.set("variant", searchParams.variant);
+								}
+								return (
+									<YnsLink key={idx} href={`?${params}`} scroll={false}>
+										{idx === 0 && !product.metadata.preview ? (
+											<MainProductImage
+												key={image}
+												className="w-full rounded-lg bg-neutral-100 object-cover object-center transition-opacity"
+												src={image}
+												loading="eager"
+												priority
+												alt=""
+											/>
+										) : (
+											<Image
+												key={image}
+												className="w-full rounded-lg bg-neutral-100 object-cover object-center transition-opacity"
+												src={image}
+												width={700 / 3}
+												height={700 / 3}
+												sizes="(max-width: 1024x) 33vw, (max-width: 1280px) 20vw, 225px"
+												loading="eager"
+												priority
+												alt=""
+											/>
+										)}
+									</YnsLink>
+								);
+							})}
 						</div>
 					</div>
 
@@ -211,11 +218,9 @@ export default async function SingleProductPage(props: {
 				<SimilarProducts id={product.id} />
 			</Suspense>
 
-			{src && (
-				<Suspense fallback={<div>Loading...</div>}>
-					<ProductImageModal src={src} images={images} alt={product.name} />
-				</Suspense>
-			)}
+			<Suspense>
+				<ProductImageModal images={images} />
+			</Suspense>
 
 			<JsonLd jsonLd={mappedProductToJsonLd(product)} />
 		</article>
