@@ -3,8 +3,8 @@ import ApparelImage from "@/images/apparel.jpg";
 
 export const config = {
 	categories: [
-		{ name: "Apparel", slug: "apparel", image: ApparelImage },
-		{ name: "Accessories", slug: "accessories", image: AccessoriesImage },
+		{ name: "Woman", slug: "woman", image: ApparelImage },
+		{ name: "Man", slug: "man", image: AccessoriesImage },
 	],
 
 	social: {
