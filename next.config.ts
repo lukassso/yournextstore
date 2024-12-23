@@ -20,7 +20,8 @@ const nextConfig: NextConfig = {
 			{ hostname: "d1wqzb5bdbcre6.cloudfront.net" },
 			{ hostname: "*.blob.vercel-storage.com" },
 			// TODO: Remove this once we have a proper solution for multiple pictures
-			{ hostname: "robbreport.com" },
+			{ hostname: "my.spline.design" },
+			{ hostname: "dajmudajmu.pl" },
 		],
 		formats: ["image/avif", "image/webp"],
 	},

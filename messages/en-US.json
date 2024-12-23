@@ -32,7 +32,7 @@
 	"Global.deliveryEstimates.week": "{count, plural, =1 {# week} other {# weeks}}",
 	"Global.actions.shopNow": "Shop now",
 	"/.hero.title": "Discover our Curated Collection",
-	"/.hero.description": "Explore our carefully selected products for your home and lifestyle.",
+	"/.hero.description": "Explore our carefully selected products for your lifestyle.",
 	"/.hero.action": "Shop Now",
 	"/.hero.link": "/category/accessories",
 	"/search.notFound.title": "No Results Found for \"{query}\"",
