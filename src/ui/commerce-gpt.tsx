@@ -9,7 +9,6 @@ import { ArrowUp, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { startTransition, useEffect, useRef, useState } from "react";
 import { ProductList } from "./commercegpt/product-list";
-import { YnsLink } from "./yns-link";
 
 export function CommerceGPT() {
 	const { messages, input, handleInputChange, handleSubmit, append, data } = useChat({});

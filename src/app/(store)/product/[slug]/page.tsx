@@ -9,7 +9,6 @@ import { AddToCartButton } from "@/ui/add-to-cart-button";
 import { JsonLd, mappedProductToJsonLd } from "@/ui/json-ld";
 import { Markdown } from "@/ui/markdown";
 import { MainProductImage } from "@/ui/products/main-product-image";
-import { ProductGallery } from "@/ui/products/product-gallery";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
