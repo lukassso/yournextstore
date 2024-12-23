@@ -48,9 +48,7 @@ export function CommerceGPT() {
 				<div className="flex items-center justify-between gap-x-4">
 					<div className="mx-auto flex max-w-7xl items-center justify-between gap-x-4">
 						<div className="flex items-center gap-x-4">
-							<p className="text-center text-sm font-medium">
-								🎉 You can use powerful OpenAI models to search and buy products
-							</p>
+							<p className="text-center text-sm font-medium">🎉 You can use AI to search and buy products</p>
 							<Button
 								size="sm"
 								className="flex-none rounded-full bg-orange-600 px-3 py-1 text-sm font-semibold text-white shadow-sm hover:bg-orange-700 focus-visible:ring-0"
@@ -63,13 +61,13 @@ export function CommerceGPT() {
 							</Button>
 						</div>
 					</div>
-					<YnsLink
+					{/* <YnsLink
 						className="bg-black rounded-full text-white px-4 py-1 text-sm"
 						href="https://github.com/yournextstore/yournextstore"
 						target="_blank"
 					>
 						View on GitHub
-					</YnsLink>
+					</YnsLink> */}
 				</div>
 			</div>
 			<div
@@ -87,16 +85,16 @@ export function CommerceGPT() {
 										<span className="bg-gradient-to-r from-orange-500 via-red-500 to-red-600 text-transparent bg-clip-text">
 											Commerce GPT
 										</span>{" "}
-										in Your Next Store
+										in Dai Mu!
 									</h3>
 									<div className="flex flex-wrap justify-center gap-2 w-full">
 										<Button
 											variant="outline"
 											className="text-lg text-neutral-500"
 											size="lg"
-											onClick={() => append({ role: "user", content: "Show me some bags" })}
+											onClick={() => append({ role: "user", content: "Show me some Tshirts" })}
 										>
-											Show me some bags
+											Show me some Tshirts
 										</Button>
 										<Button
 											variant="outline"

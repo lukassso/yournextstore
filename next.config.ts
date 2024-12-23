@@ -22,7 +22,6 @@ const nextConfig: NextConfig = {
 			// TODO: Remove this once we have a proper solution for multiple pictures
 			{ hostname: "my.spline.design" },
 			{ hostname: "dajmudajmu.pl" },
-			{ hostname: "robbreport.com" },
 		],
 		formats: ["image/avif", "image/webp"],
 	},

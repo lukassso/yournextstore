@@ -16,16 +16,12 @@ const sections = [
 		header: "Support",
 		links: [
 			{
-				label: "Features",
-				href: "https://yournextstore.com/#features",
-			},
-			{
-				label: "Pricing",
-				href: "https://yournextstore.com/#pricing",
+				label: "Privacy Policy",
+				href: "#policy",
 			},
 			{
 				label: "Contact Us",
-				href: "mailto:hi@yournextstore.com",
+				href: "mailto: sklep@DajmuDajmu.pl",
 			},
 		],
 	},
@@ -63,23 +59,23 @@ export async function Footer() {
 			</div>
 			<div className="container mt-8 flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-neutral-500 md:flex-row">
 				<div>
-					<p>© 2024 Your Next Store</p>
-					<p>Delightful commerce for everyone</p>
+					<p>© 2024 Dai Mu Store</p>
+					<p>Delightful commerce for carspotters</p>
 				</div>
 				<div className="flex items-center gap-4">
 					<YnsLink
 						className="inline-flex items-center gap-1 transition-colors hover:text-neutral-700"
-						href="https://x.com/zaiste"
+						href="https://www.tiktok.com/@dajmu_dajmu"
 					>
-						<TwitterIcon className="h-4 w-4" /> @zaiste
-						<span className="sr-only">Twitter</span>
+						<TwitterIcon className="h-4 w-4" /> @TikTok
+						<span className="sr-only">TickTock</span>
 					</YnsLink>
 					<YnsLink
 						className="inline-flex items-center gap-1 transition-colors hover:text-neutral-700"
-						href="https://x.com/typeofweb"
+						href="https://www.instagram.com/dajmu_dajmu/"
 					>
-						<TwitterIcon className="h-4 w-4" /> @typeofweb
-						<span className="sr-only">Twitter</span>
+						<TwitterIcon className="h-4 w-4" /> @Instagram
+						<span className="sr-only">Instagram</span>
 					</YnsLink>
 				</div>
 			</div>

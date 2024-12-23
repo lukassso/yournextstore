@@ -16,6 +16,8 @@ export default async function Home() {
 	const products = await Commerce.productBrowse({ first: 6 });
 	const t = await getTranslations("/");
 
+	const { default: Spline } = await import("@splinetool/react-spline");
+
 	return (
 		<main>
 			<section className="rounded bg-neutral-100 py-8 sm:py-12">
@@ -30,7 +32,9 @@ export default async function Home() {
 							{t("hero.action")}
 						</YnsLink>
 					</div>
-					<Image
+					<Spline scene="https://prod.spline.design/W-Zm8oO-T1CNZLWI/scene.splinecode" />
+
+					{/* <Image
 						alt="Cup of Coffee"
 						loading="eager"
 						priority={true}
@@ -42,19 +46,19 @@ export default async function Home() {
 							objectFit: "cover",
 						}}
 						sizes="(max-width: 640px) 70vw, 450px"
-					/>
+					/> */}
 				</div>
 			</section>
 
 			<ProductList products={products} />
 
-			<section className="w-full py-8">
+			{/* <section className="w-full py-8">
 				<div className="grid gap-8 lg:grid-cols-2">
 					{StoreConfig.categories.map(({ slug, image: src }) => (
 						<CategoryBox key={slug} categorySlug={slug} src={src} />
 					))}
 				</div>
-			</section>
+			</section> */}
 		</main>
 	);
 }
